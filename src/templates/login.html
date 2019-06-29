@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block head %}
+<title>Login Page</title>
+    <style>
+        .form {
+            text-align: center;
+            margin-top: 35%;
+        }
+
+        .input {
+            width: 40%;
+            margin-bottom: 2%;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="form" id="login">
+        <form action="/login" method="POST">
+            <label for="username" class="label">Username </label>
+            <input class="input" type="text" name="username" id="username">
+
+            <label class="label" for="password">Password </label>
+            <input class="input" type="password" name="password" id="password">
+            <br>
+            <br>
+            <input class="button" type="submit" value="Login">
+            <br>
+            <div id="register">
+                <a href="/register">Don't have an account yet?</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
