@@ -2,10 +2,61 @@ from flask import Flask, render_template, request, redirect
 import mongo_setup
 import mongoengine
 from models.user import User
+from models.todo import Todo
 
 app = Flask(__name__)
 
 global_user: User = None  # this will be changed later, while using the app
+
+
+@app.route('/', methods=['POST', 'GET'])
+def index():
+    if global_user is None:
+        return redirect('/login')
+    else:
+        if request.method == 'POST':
+            task_content = request.form['content']
+            new_task = Todo()
+            new_task.content = task_content
+
+            new_task.save()
+
+            global_user.todo_ids.append(new_task.id)
+            global_user.save()
+
+            return redirect('/')
+
+        else:
+            tasks = [task for task in Todo.objects() if task.id in global_user.todo_ids]
+            return render_template('index.html', tasks=tasks)
+
+
+@app.route('/delete/<string:id>')
+def delete(id):
+    task_to_delete = Todo.objects(id=id).first()
+
+    try:
+        task_to_delete.delete()
+        return redirect('/')
+    except:
+        return 'There was a problem deleting that task'
+
+
+@app.route('/update/<string:id>', methods=['GET', 'POST'])
+def update(id):
+    task = Todo.objects(id=id).first()
+
+    if request.method == 'POST':
+        task.content = request.form['content']
+
+        try:
+            task.save()
+            return redirect('/')
+        except:
+            return 'There was an issue updating your task'
+
+    else:
+        return render_template('update.html', task=task)
 
 
 @app.route('/login', methods=['GET', 'POST'])
