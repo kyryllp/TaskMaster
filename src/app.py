@@ -62,7 +62,8 @@ def update(id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if User.objects(username=request.form['username'], password=request.form['password']):
+        if User.objects(username=request.form['username'],
+                        password=request.form['password']):
             global global_user
 
             global_user = User.objects(username=request.form['username']).first()
