@@ -102,4 +102,4 @@ def register():
 if __name__ == '__main__':
     mongo_setup.global_init()
     mongoengine.connect(db='simple_todo')
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
