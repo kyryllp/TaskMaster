@@ -78,9 +78,9 @@ def login():
 def register():
     if request.method == 'POST':
         if not User.objects(username=request.form['username']) \
-                and request.form['username'] is not None\
-                and request.form['name'] is not None\
-                and request.form['surname'] is not None\
+                and request.form['username'] is not None \
+                and request.form['name'] is not None \
+                and request.form['surname'] is not None \
                 and request.form['password'] is not None:
             user = User()
 
@@ -103,3 +103,4 @@ if __name__ == '__main__':
     mongo_setup.global_init()
     mongoengine.connect(db='simple_todo')
     app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True)

@@ -3,5 +3,5 @@ Project was created for better learning of **Flask** and better understanding of
 
 ### How to Run:
     docker pull alpine:latest
-    docker build -t alpine:latest .
+    docker build -t .
     docker run -it -d -p 5000:5000 alpine:latest
